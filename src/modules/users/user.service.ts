@@ -3,7 +3,9 @@ import { User } from './user.model';
 
 @Injectable()
 export class UserService {
-  users: User[] = [new User('Gabi', 'gabi@teste.com', '1234')];
+  users: User[] = [
+  //  new User('Gabi', 'gabi@teste.com', '1234')
+  ];
 
   getAll(): User[] {
     return this.users;
