@@ -6,8 +6,8 @@ import { UserModule } from './modules/users/user.module';
 
 @Module({
   imports: [
-    DatabaseModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
     UserModule,
   ],
   controllers: [],

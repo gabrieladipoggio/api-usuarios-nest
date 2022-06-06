@@ -1,13 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
+import { Inject, Injectable } from '@nestjs/common';
+import { USER_REPOSITORY } from '../../../constants';
 import { User } from './user.model';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User)
-    private userModel: typeof User,
-  ){};
+    @Inject(USER_REPOSITORY) private readonly userModel: typeof User,
+  ) {}
 
   async getAll(): Promise<User[]> {
     return this.userModel.findAll();
@@ -21,11 +20,11 @@ export class UserService {
     this.userModel.create(user);
   }
 
-  async update(user: User): Promise<[number]>{
+  async update(user: User): Promise<[number]> {
     return this.userModel.update(user, {
       where: {
-        id: user.id
-      }
+        id: user.id,
+      },
     });
   }
 
