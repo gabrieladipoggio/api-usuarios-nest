@@ -26,7 +26,7 @@ export class UserController {
 
   @Post()
   async create(@Body() user: User) {
-    this.userService.create(user);
+    return this.userService.create(user);
   }
 
   @Put()
