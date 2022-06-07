@@ -5,7 +5,10 @@ import {
   Get,
   Param,
   Post,
+  Response,
   Put,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { User } from './user.model';
 import { UserService } from './user.service';
@@ -31,7 +34,17 @@ export class UserController {
 
   @Post()
   async create(@Body() user: User) {
-    return this.userService.create(user);
+    try {
+      return await this.userService.create(user);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: error.message,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   @Put()

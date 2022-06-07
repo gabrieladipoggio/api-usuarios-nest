@@ -1,6 +1,5 @@
 import { Table, Model, Column, DataType } from 'sequelize-typescript';
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import { IsEmailUnique } from './is-email-unique.validator';
 @Table
 export class User extends Model<User> {
   @Column({ type: DataType.STRING })
@@ -14,9 +13,6 @@ export class User extends Model<User> {
   @IsNotEmpty({
     message: 'O campo email é obrigatório',
   })
-  /* @IsEmailUnique({
-    message: 'Esse email já está registrado',
-  }) */
   email: string;
 
   @Column({ type: DataType.STRING })

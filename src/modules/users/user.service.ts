@@ -21,6 +21,10 @@ export class UserService {
   }
 
   async create(user: User) {
+    const userWithSameEmail = await this.getByEmail(user.email);
+    if (userWithSameEmail) {
+      throw new Error('E-mail já existente');
+    }
     return await this.userRepository.create<User>(user);
   }
 
