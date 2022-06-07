@@ -14,6 +14,7 @@ import {
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -24,12 +25,12 @@ export class UserController {
     return this.userService.getAll();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   async getOne(@Param() params): Promise<User> {
     return this.userService.getOne(params.id);
   }
 
-  @Get(':email')
+  @Get('email/:email')
   async getByEmail(@Param() params): Promise<User> {
     return this.userService.getByEmail(params.email);
   }
@@ -54,8 +55,15 @@ export class UserController {
     return this.userService.update(user);
   }
 
-  @Delete(':id')
+  @Delete('id/:id')
   async delete(@Param() params) {
     this.userService.delete(params.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    console.log(req);
+    return req.user;
   }
 }
