@@ -58,10 +58,4 @@ export class UserController {
   async delete(@Param() params) {
     this.userService.delete(params.id);
   }
-
-  @UseGuards(AuthGuard('local'))
-  @Post('login')
-  async login(@Request() req) {
-    return req.user.dataValues;
-  }
 }
