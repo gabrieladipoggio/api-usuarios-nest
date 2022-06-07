@@ -5,13 +5,15 @@ import {
   Get,
   Param,
   Post,
-  Response,
+  Request,
   Put,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { User } from './user.model';
 import { UserService } from './user.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
@@ -55,5 +57,11 @@ export class UserController {
   @Delete(':id')
   async delete(@Param() params) {
     this.userService.delete(params.id);
+  }
+
+  @UseGuards(AuthGuard('local'))
+  @Post('login')
+  async login(@Request() req) {
+    return req.user.dataValues;
   }
 }
