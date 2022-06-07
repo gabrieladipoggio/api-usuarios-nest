@@ -5,23 +5,23 @@ import { User } from './user.model';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(USER_REPOSITORY) private readonly userModel: typeof User,
+    @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
 
   async getAll(): Promise<User[]> {
-    return this.userModel.findAll();
+    return this.userRepository.findAll();
   }
 
   async getOne(id: number): Promise<User> {
-    return this.userModel.findByPk(id);
+    return await this.userRepository.findOne<User>({ where: { id } });
   }
 
   async create(user: User) {
-    this.userModel.create(user);
+    return await this.userRepository.create<User>(user);
   }
 
   async update(user: User): Promise<[number]> {
-    return this.userModel.update(user, {
+    return this.userRepository.update(user, {
       where: {
         id: user.id,
       },
