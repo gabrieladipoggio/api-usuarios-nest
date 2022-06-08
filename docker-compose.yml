@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  main:
+    container_name: main
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3001:3000
+    command: npm run start:dev
+    env_file:
+      - .docker.env
+    networks:
+      - webnet
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    networks:
+      - webnet
+    environment:
+      POSTGRES_PASSWORD: fcamara
+      POSTGRES_USER: fcamara
+      POSTGRES_DB: development_api_cadastro
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 8888:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+networks:
+  webnet:
+volumes:
+  pgdata:
