@@ -20,4 +20,10 @@ export class User extends Model<User> {
     message: 'O campo senha é obrigatório',
   })
   password: string;
+
+  @Column({ type: DataType.DATE })
+  lastLogin: Date;
+
+  @Column({ type: DataType.ENUM('user', 'admin') })
+  role: string;
 }
