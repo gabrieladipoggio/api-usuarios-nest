@@ -62,6 +62,25 @@ export class UserService {
     }
   }
 
+  async updateLastLogin(
+    userEmail: string,
+    newLogin: Date,
+  ): Promise<UserDTODetails> {
+    const userEntity = await this.userRepository.update(
+      { lastLogin: newLogin },
+      {
+        where: {
+          email: userEmail,
+        },
+      },
+    );
+    if (userEntity[0] > 0) {
+      return this.getByEmail(userEmail);
+    } else {
+      throw new Error('Usuário inválido');
+    }
+  }
+
   async delete(id: number) {
     const userEntity = await this.userRepository.findOne<User>({
       where: { id },

@@ -11,9 +11,7 @@ import {
   HttpStatus,
   UseGuards,
 } from '@nestjs/common';
-import { User } from './user.model';
 import { UserService } from './user.service';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserDTODetails, UserDTORegistration } from './user.dto';
 
@@ -75,7 +73,6 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    console.log(req);
     return req.user;
   }
 }
