@@ -24,6 +24,7 @@ export class AuthService {
     this.userService.updateLastLogin(user.email, now);
     return {
       id: user.id,
+      email: user.email,
       created: user.createdAt,
       modified: user.updatedAt,
       access_token: this.jwtService.sign(payload),

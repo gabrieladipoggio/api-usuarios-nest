@@ -45,7 +45,14 @@ export class UserService {
     }
     user.password = await bcrypt.hash(user.password, 5);
     const userEntity = await this.userRepository.create<User>(user);
-    return plainToClass(UserDTODetails, userEntity);
+    return {
+      id: userEntity.id,
+      email: userEntity.email,
+      created: userEntity.createdAt,
+      modified: userEntity.updatedAt,
+      last_login: userEntity.lastLogin,
+      roles: userEntity.role,
+    };
   }
 
   async update(user: UserDTORegistration): Promise<UserDTODetails> {
