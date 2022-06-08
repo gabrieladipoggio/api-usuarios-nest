@@ -3,6 +3,7 @@ import { plainToClass } from 'class-transformer';
 import { USER_REPOSITORY } from '../../../constants';
 import { UserDTODetails, UserDTORegistration } from './user.dto';
 import { User } from './user.model';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -42,6 +43,7 @@ export class UserService {
     if (userWithSameEmail) {
       throw new Error('E-mail já existente');
     }
+    user.password = await bcrypt.hash(user.password, 5);
     const userEntity = await this.userRepository.create<User>(user);
     return plainToClass(UserDTODetails, userEntity);
   }
