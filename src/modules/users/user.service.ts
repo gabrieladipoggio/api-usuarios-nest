@@ -59,6 +59,7 @@ export class UserService {
     /*
       Não permite atualizar o email 
     */
+    user.password = await bcrypt.hash(user.password, 5);
     const userEntity = await this.userRepository.update(user, {
       where: {
         email: user.email,
